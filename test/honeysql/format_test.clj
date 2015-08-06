@@ -1,21 +1,25 @@
 (ns honeysql.format-test
   (:refer-clojure :exclude [format])
   (:require [clojure.test :refer [deftest testing is are]]
-            [honeysql.format :refer :all]))
+            [honeysql.format :refer :all]
+            [honeysql.core :refer [raw]]))
 
 (deftest test-quote
   (are
-    [qx res]
-    (= (apply quote-identifier "foo.bar.baz" qx) res)
+      [qx res]
+      (= (apply quote-identifier "foo.bar.baz" qx) res)
     [] "foo.bar.baz"
     [:style :mysql] "`foo`.`bar`.`baz`"
     [:style :mysql :split false] "`foo.bar.baz`")
   (are
-    [x res]
-    (= (quote-identifier x) res)
+      [x res]
+      (= (quote-identifier x) res)
     3 "3"
     'foo "foo"
     :foo-bar "foo_bar")
+  (are [qx x res] (= (apply quote-identifier x qx) res)
+    [:style :mysql] "foo-bar" "`foo-bar`"
+    [:style :ansi] "foo.bar-baz" "\"foo\".\"bar-baz\"")
   (is (= (quote-identifier "*" :style :ansi) "*")))
 
 (deftest test-cte

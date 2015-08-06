@@ -2,10 +2,14 @@
 
 SQL as Clojure data structures. Build queries programmatically -- even at runtime -- without having to bash strings together.
 
+## Difference to the original Honey SQL
+
+This version of Honey SQL does not convert dashes `-` to underscores `_` if a `:style` parameter is passed to the `sql/format` function
+
 ## Build
 
-[![Build Status](https://travis-ci.org/jkk/honeysql.svg?branch=master)](https://travis-ci.org/jkk/honeysql)
-[![Dependencies Status](http://jarkeeper.com/jkk/honeysql/status.svg)](http://jarkeeper.com/jkk/honeysql)
+[![Build Status](https://travis-ci.org/jkk/honeysql.svg?branch=master)](https://travis-ci.org/azapps/honeysql)
+[![Dependencies Status](http://jarkeeper.com/jkk/honeysql/status.svg)](http://jarkeeper.com/azapps/honeysql)
 
 ## Leiningen Coordinates
 

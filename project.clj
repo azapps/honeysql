@@ -4,5 +4,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :url "https://github.com/jkk/honeysql"
   :scm {:name "git"
-        :url "https://github.com/jkk/honeysql"}
+        :url "https://github.com/azapps/honeysql"}
   :dependencies [[org.clojure/clojure "1.7.0"]])

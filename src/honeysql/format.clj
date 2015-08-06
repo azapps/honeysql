@@ -51,24 +51,26 @@
 (def ^:dynamic *quote-identifier-fn* nil)
 (def ^:dynamic *parameterizer* nil)
 
-(defn- undasherize [s]
-  (string/replace s "-" "_"))
+(defn- undasherize [s & [qf]]
+  (if qf
+    s
+    (string/replace s "-" "_")))
 
 (defn quote-identifier [x & {:keys [style split] :or {split true}}]
   (let [qf (if style
              (quote-fns style)
              *quote-identifier-fn*)
         s (cond
-            (or (keyword? x) (symbol? x)) (undasherize (name x))
-            (string? x) (if qf x (undasherize x))
+            (or (keyword? x) (symbol? x)) (undasherize (name x) qf)
+            (string? x) (undasherize x qf)
             :else (str x))]
     (if-not qf
       s
       (let [qf* #(if (= "*" %) % (qf %))]
         (if-not split
-         (qf* s)
-         (let [parts (string/split s #"\.")]
-           (string/join "." (map qf* parts))))))))
+          (qf* s)
+          (let [parts (string/split s #"\.")]
+            (string/join "." (map qf* parts))))))))
 
 (def infix-fns
   #{"+" "-" "*" "/" "%" "mod" "|" "&" "^"
